@@ -9,7 +9,7 @@ It is the final assessment project for Udacity's React & Redux course. The API s
 Clone the GitHub repository, then install and launch:
 
 ```
-    $ git clone https://github.com/jenleap/reactnd-myreads
+    $ git clone https://github.com/jenleap/reactnd-readable
     $ npm install
     $ npm start
 ```

@@ -53,7 +53,6 @@ class NewPost extends Component {
                 <div>
                 <select {...field.input} 
                     className="form-control">
-                    <option selected disabled>Select...</option>
                     {field.categories.map( c => (
                         <option key={c.name} value={c.name}>{c.name}</option>
                     ))}
