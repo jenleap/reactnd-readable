@@ -6,6 +6,15 @@ export const config = {
     headers: { 'Authorization': 'jens-request' }
 };
 
+export function getAllComments() {
+    const request = axios.get(`${ROOT_URL}/comments`, config);
+
+    return {
+        type: 'FETCH_ALL_COMMENTS',
+        payload: request
+    };
+}
+
 export function getComments(postId) {
     const request = axios.get(`${ROOT_URL}/posts/${postId}/comments`, config);
 
@@ -51,7 +60,7 @@ export function updateComment(id, values, callback) {
 }
 
 export function deleteComment(id) {
-    const request = axios.get(`${ROOT_URL}/comments/${id}`, config);
+    axios.delete(`${ROOT_URL}/comments/${id}`, config);
 
     return {
         type: 'REMOVE_COMMENT',
@@ -60,6 +69,7 @@ export function deleteComment(id) {
 }
 
 export function voteComment(comment, amount) {
+
     const newComment = {
         ...comment,
         voteScore: comment.voteScore + amount

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPosts } from './../actions/posts';
 import { getCategories } from './../actions/categories';
@@ -13,22 +14,28 @@ class NavBar extends Component {
   render() {
     return (
       <div className="nav-bar">
-        <div 
-            className="all-posts"
-            onClick={() => this.props.selectCategory("")}
-        >
-          <h4>All Posts</h4>
-        </div>
+        <Link to={`/category/allposts`}>
+          <div 
+              className="all-posts"
+              onClick={() => this.props.selectCategory("")}
+          >
+            <h4>All Posts</h4>
+          </div>
+        </Link>
         <h4 className="text-secondary">Categories</h4>
         <div className="ml-4">
         {this.props.categories.map( c => {
           return (
-            <div key={c.name}
-              className="nav-categories"
-              onClick={() => this.props.selectCategory(c.name)}
-              >
-                {c.name}
-            </div>
+            <Link 
+              key={c.path}
+              to={`/category/${c.name}`}>
+              <div 
+                className="nav-categories"
+                onClick={() => this.props.selectCategory(c.name)}
+                >
+                  {c.name}
+              </div>
+            </Link>
           )
         })}
         </div>

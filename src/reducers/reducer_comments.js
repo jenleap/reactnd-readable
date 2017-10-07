@@ -1,11 +1,14 @@
 export function comments(state = [], action) {
     switch (action.type) {
+        case 'FETCH_ALL_COMMENTS':
+            return action.payload.data
+                .filter( c => ( c.deleted === false));
         case 'FETCH_COMMENTS':
             return action.payload.data
                 .filter( c => ( c.deleted === false))
                 .sort((a, b) => {
                     return a.voteScore < b.voteScore ? 1 : -1;
-                });;
+                });
         case 'CREATE_COMMENT':
             return [
                 ...state,

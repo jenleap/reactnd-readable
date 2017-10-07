@@ -52,7 +52,7 @@ export function updatePost(id, values) {
 }
 
 export function deletePost(id) {
-    const request = axios.delete(`${ROOT_URL}/posts/${id}`, config);
+    axios.delete(`${ROOT_URL}/posts/${id}`, config);
 
     return {
         type: 'REMOVE_POST',
@@ -61,6 +61,22 @@ export function deletePost(id) {
 }
 
 export function updateVote(post, amount) {
+    const newPost = {
+        ...post,
+        voteScore: post.voteScore + amount
+    }
+
+    axios.put(`${ROOT_URL}/posts/${post.id}`, newPost, config);
+
+    return {
+        type: 'UPDATE_POST',
+        id: post.id,
+        payload: newPost
+    }
+
+}
+
+export function selectedVote(post, amount) {
     const newPost = {
         ...post,
         voteScore: post.voteScore + amount

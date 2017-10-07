@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { createComment, updateComment } from './../actions/comments';
-import { push } from 'react-router-redux';
 
 class NewComment extends Component {
 
     componentWillMount() {
         if (this.props.page === "edit") {
-            this.initializeForm();
-            
+            this.initializeForm(); 
         }
     }
 

@@ -53,6 +53,15 @@ function get (token, id) {
   })
 }
 
+function getAll (token) {
+  return new Promise((res) => {
+    const comments = getData(token)
+    let keys = Object.keys(comments)
+    let filtered_keys = keys.filter(key => !comments.deleted)
+    res(filtered_keys.map(key => comments[key]))
+  })
+}
+
 function add (token, comment) {
   return new Promise((res) => {
     let comments = getData(token)
@@ -120,6 +129,7 @@ function edit (token, id, comment) {
 
 module.exports = {
   get,
+  getAll,
   getByParent,
   add,
   vote,

@@ -37,6 +37,11 @@ ReactDOM.render(
                     render={() => (
                     <PostDetail />
                     )}/>
+
+                <Route path="/category/"
+                    render={() => (
+                        <MainPage />
+                    )}/>
             </Switch>
         </BrowserRouter>
     </Provider>, 

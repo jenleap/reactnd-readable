@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getPost } from './../actions/posts';
 import { getSelectedPosts } from './../selectors/posts';
 import { sortByPopular, sortByRecent } from './../actions/filters';
+import { getAllComments } from './../actions/comments';
+
+import PostItem from './PostItem';
 
 class ListView extends Component {
 
-  formatDate(timestamp) {
-    return new Date(timestamp).toUTCString();
+  componentDidMount() {
+    this.props.getAllComments();
   }
 
   render() {
-    console.log(this.props.posts);
     return (
       <div className="post-list">
         <div className="mb-3">
@@ -35,28 +36,9 @@ class ListView extends Component {
         </div>
         {this.props.posts.map( p => {
           return (
-            <Link to={`/posts/detail/${p.id}`}>
-              <div className="list-group-item mb-1 post-item" 
-                key={p.id}
-                onClick={() => this.props.getPost(p.id)}>
-                  <div className="row">
-                    <div className="col">
-                        <div>{p.title}</div>
-                        <div className="head">
-                          <div className="author">{p.author}</div>
-                          <div className="date">{this.formatDate(p.timestamp)}</div>
-                        </div>
-                    </div>
-                      <div className="col-2 vote-score">{p.voteScore} 
-                        {p.voteScore >= 0 ? (
-                          <span className="material-icons">thumb_up</span>
-                        ) : (
-                          <span className="material-icons">thumb_down</span>
-                        )}
-                      </div>
-                  </div>
-              </div>
-            </Link>
+            <PostItem 
+              key={p.id}
+              post={p} />
           )
         })}
       </div>
@@ -72,7 +54,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPost: (id) => dispatch(getPost(id)),
+    getAllComments: () => dispatch(getAllComments()),
     sortByPopular: () => dispatch(sortByPopular()),
     sortByRecent: () => dispatch(sortByRecent())
   };

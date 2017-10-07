@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { getComments, voteComment, deleteComment } from './../actions/comments';
-import { updateVote, deletePost, getPost } from './../actions/posts';
+import { selectedVote, deletePost, getPost } from './../actions/posts';
 
 import Titlebar from './Titlebar';
 import NewComment from './NewComment';
@@ -44,10 +44,14 @@ class PostDetail extends Component {
       this.props.history.push("/");
   }
 
+  
+
   render() {
     return (
       <div className="container">
         <Titlebar />
+        {this.props.post.deleted === false ? (
+        <div>
         <div className="float-right">
           <Link className="btn btn-secondary"
             to={`/posts/edit/${this.props.post.id}`}>
@@ -85,6 +89,7 @@ class PostDetail extends Component {
           {this.props.comments.map( c => {
             return (
                <Comment 
+                  key={c.id}
                   comment={c} 
                   open={this.openModal} /> 
             )
@@ -101,9 +106,11 @@ class PostDetail extends Component {
             comment={this.state.selectedComment}
             close={this.closeModal} />
         </Modal>
-
-      </div>        
-
+      </div>
+      ) : (
+        <div>This post has been deleted.</div>      
+      )}
+    </div>
     );
   }
 }
@@ -118,7 +125,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getComments: (postId) => dispatch(getComments(postId)),
-    updateVote: (post, amount) => dispatch(updateVote(post, amount)),
+    updateVote: (post, amount) => dispatch(selectedVote(post, amount)),
     deletePost: (id) => dispatch(deletePost(id)),
     voteComment: (comment, amount) => dispatch(voteComment(comment, amount)),
     getPost: (id) => dispatch(getPost(id)),
